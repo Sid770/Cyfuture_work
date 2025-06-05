@@ -7,3 +7,4 @@ sentence-transformers
 python-docx
 PyPDF2
 google-generativeai
+gunicorn
