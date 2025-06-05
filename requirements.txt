@@ -1,0 +1,9 @@
+Flask
+Werkzeug
+python-dotenv
+numpy
+scikit-learn
+sentence-transformers
+python-docx
+PyPDF2
+google-generativeai
