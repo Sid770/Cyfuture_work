@@ -1,0 +1,29 @@
+{
+  "scores": [
+    {
+      "progress": "10%",
+      "score": 2.0
+    },
+    {
+      "progress": "20%",
+      "score": 9.92
+    },
+    {
+      "progress": "30%",
+      "score": 10.04
+    },
+    {
+      "progress": "40%",
+      "score": 6.17
+    },
+    {
+      "progress": "50%",
+      "score": 5.45
+    },
+    {
+      "progress": "60%",
+      "score": -2.8
+    }
+  ],
+  "overall": 5.13
+}

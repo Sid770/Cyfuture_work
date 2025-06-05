@@ -1,0 +1,26 @@
+[
+  {
+    "question": "You've worked with Llama3 and RAG. Describe a challenging scenario you encountered while customizing Llama3 for the Awfis dataset and how you overcame it.",
+    "answer": "hello hello"
+  },
+  {
+    "question": "In your AI-Driven Recruitment Web App, you used XGBoost, Random Forest, and BERT with SHAP analysis. Can you elaborate on why you chose these specific models and how SHAP analysis helped improve the interpretability of your results?",
+    "answer": "hello hello I don't know"
+  },
+  {
+    "question": "You've interned at Infosys and Orinson Technologies. Describe a situation where you had to optimize a machine learning model for deployment, focusing on the specific techniques you used to improve latency or throughput.",
+    "answer": "hello hello I don't know hello"
+  },
+  {
+    "question": "Your \"Kisan Sarthi\" project integrates CNNs and LLMs for disease prediction. Explain the architecture of this integrated system, specifically how the CNN outputs are used as input for the LLM.",
+    "answer": "hello hello"
+  },
+  {
+    "question": "Based on your experience with cloud platforms and containerization (Docker, Kubernetes) (assuming this is discussed in the interview or implicit from experience), describe a time you had to debug a deployment issue in a cloud environment. What were the debugging steps you took, and what tools did you utilize?",
+    "answer": "hello hello"
+  },
+  {
+    "question": "The job description mentions experience with NLP, computer vision, or time-series analysis. Given your experience with CNNs, could you describe a novel computer vision application you would be excited to build, detailing the specific challenges and potential solutions?",
+    "answer": "hello I don't know"
+  }
+]
