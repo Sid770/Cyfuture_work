@@ -776,7 +776,7 @@
                     <p style="color: var(--text-light); margin-bottom: 24px; text-align: center;">
                         Questions have been generated successfully. Click below to begin your voice interview.
                     </p>
-                    
+                     
                     <div class="controls-grid">
                         <button id="startInterviewVoice" class="btn btn-secondary">
                             🎤 Start Voice Interview
@@ -861,6 +861,44 @@
             </div>
         </div>
     </div>
+
+    <form id="resultForm">
+  <!-- form fields here -->
+  <button type="submit">Submit Result</button>
+</form>
+
+<div id="statusMsg" style="margin-top: 10px; color: green;"></div>
+
+<script>
+  document.getElementById('resultForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const formData = {
+      name: document.getElementById('name').value,
+      score: document.getElementById('score').value,
+    };
+
+    const response = await fetch('/submit-result', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await response.json();
+
+    const msgDiv = document.getElementById('statusMsg');
+    msgDiv.textContent = result.message;
+
+    if (result.status === 'success') {
+      msgDiv.style.color = 'green';
+    } else {
+      msgDiv.style.color = 'red';
+    }
+  });
+</script>
+
 <script>
   // Voice Interview System JavaScript
 // Enhanced Voice Interview System JavaScript
