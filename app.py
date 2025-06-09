@@ -416,6 +416,80 @@ def not_found(e):
 def internal_error(e):
     return jsonify({'status': 'error', 'message': 'Internal server error'}), 500
 
+import csv
+from dotenv import load_dotenv
+import smtplib
+from email.message import EmailMessage
+
+load_dotenv()
+
+def export_results_to_csv(results, filename='data/hr_results.csv'):
+    with open(filename, mode='w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        header = ['ID', 'Name', 'Email', 'Position', 'Score', 'Timestamp']
+        writer.writerow(header)
+        for r in results:
+            writer.writerow([
+                r.get('id'), r.get('name'), r.get('email'),
+                r.get('position'), r.get('score'), r.get('timestamp')
+            ])
+    return filename
+def send_email_with_csv(to_email, subject, body, attachment_path):
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = os.getenv('EMAIL_ADDRESS')
+    msg['To'] = to_email
+    msg.set_content(body)
+
+    # Attach the CSV file
+    with open(attachment_path, 'rb') as f:
+        file_data = f.read()
+        file_name = os.path.basename(attachment_path)
+    msg.add_attachment(file_data, maintype='application', subtype='octet-stream', filename=file_name)
+
+    # Send email
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(os.getenv('EMAIL_ADDRESS'), os.getenv('EMAIL_PASSWORD'))
+        smtp.send_message(msg)
+
+@app.route('/submit-result', methods=['POST'])
+def submit_result():
+    try:
+        new_result = request.json  # or use request.form if form submission
+        results = []
+
+        if os.path.exists(RESULTS_FILE):
+            with open(RESULTS_FILE, 'r') as f:
+                results = json.load(f)
+
+        results.append(new_result)
+
+        with open(RESULTS_FILE, 'w') as f:
+            json.dump(results, f, indent=4)
+
+        # ✅ Export to CSV
+        csv_path = export_results_to_csv(results)
+
+        # ✅ Send Email Immediately After Interview
+        send_email_with_csv(
+            to_email=os.getenv('HR_EMAIL'),
+            subject='New Interview Result Submitted',
+            body='A new interview result has been submitted. Please find the attached CSV with all current results.',
+            attachment_path=csv_path
+        )
+
+        return jsonify({
+    'status': 'success',
+    'message': 'Result submitted and email sent to HR successfully.'
+})
+
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'status': 'error', 'message': str(e)})
+
+
 if __name__ == '__main__':
     print("Starting HireIntelIQ Voice Interview System...")
     print("Available endpoints:")
@@ -425,5 +499,5 @@ if __name__ == '__main__':
     print("  - /get-results (Get Results)")
     print("  - /top-candidates (Top Candidates)")
     print("  - /export-results (Export CSV)")
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
-
+    
+    app.run(debug=True, host='0.0.0.0', port=5000)
